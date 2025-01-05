@@ -1,2 +1,3 @@
-# movies-
-an opensource letterboxd alternative
+# movies
+
+a free and open-source [Letterboxd](https://letterboxd.com) alternative.
