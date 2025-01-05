@@ -1,9 +1,10 @@
+import Navbar from "@/components/navbar";
 import Link from "next/link";
 
 export default function Home() {
     return (
         <div className="flex flex-col min-h-screen justify-center items-center px-4 py-12 sm:px-6 lg:px-8">
-            {/* <Navbar active="home" /> */}
+            <Navbar active="home" />
             <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
                 <div className="flex flex-col space-y-2 items-start justify-center">
                     <p className="text-foreground/70 text-sm">movies.kyle.so</p>
