@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { EllipsisIcon, EyeIcon, HeartIcon, ListIcon } from "lucide-react";
+import { EllipsisIcon, EyeIcon, HeartIcon, ListIcon, StarHalfIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -63,14 +64,19 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                             </div>
                         </div>
                         <div className="flex flex-col gap-1">
+                            {new Date(data.release_date) > new Date() && (
+                                <Badge variant="destructive" className="w-fit mb-2">
+                                    Upcoming
+                                </Badge>
+                            )}
                             <div className="flex flex-row justify-between w-full items-center">
-                                <div className="flex flex-row gap-2 items-center">
+                                <div className="flex flex-row space-x-2 items-center">
                                     <h1 className="text-3xl font-bold text-white">{data.title}</h1>
                                     <Link
-                                        href="/movie/gladiator-ii"
-                                        className="text-foreground/50 decoration-foreground/50 hover:underline hover:text-foreground transition-colors underline-offset-4"
+                                        href={`/year/${data.release_date.split("-")[0]}`}
+                                        className="text-foreground/50 decoration-foreground/50 hover:underline hover:text-foreground transition-colors"
                                     >
-                                        (2024)
+                                        ({data.release_date.split("-")[0]})
                                     </Link>
                                 </div>
                                 <Button variant="ghost" className="h-fit px-1 py-1">
@@ -78,6 +84,13 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                                 </Button>
                             </div>
                             <p className="text-white/80 text-sm">{data.tagline}</p>
+                            <div className="flex flex-row gap-1 items-center mt-2">
+                                <StarIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
+                                <StarIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
+                                <StarIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
+                                <StarHalfIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
+                                <p className="text-white/70 text-sm">3.5/5 ({data.vote_count})</p>
+                            </div>
                             <div className="flex flex-row gap-2 items-center text-white/90 mt-4">
                                 <MovieRating />
                                 <p>·</p>
@@ -90,23 +103,40 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                                     ({data.origin_country[0]})
                                 </p>
                                 <p>·</p>
-                                <p className="text-white/70 text-sm">
-                                    {data.genres.map((genre: any) => genre.name).join(", ")}
-                                </p>
+                                <div className="flex flex-row gap-1 items-center">
+                                    {data.genres.map((genre: any, i: number) => (
+                                        <div
+                                            key={genre.id}
+                                            className="flex flex-row items-center text-white/70 text-sm"
+                                        >
+                                            <Link
+                                                href={`/genre/${genre.id}`}
+                                                className="hover:underline hover:text-white transition-colors underline-offset-4"
+                                            >
+                                                {genre.name}
+                                            </Link>
+                                            {i !== data.genres.length - 1 && <p>,</p>}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                             <p className="text-white/90 text-sm mt-4">{data.overview}</p>
                             <div className="flex flex-col md:flex-row gap-2 items-center mt-8">
-                                <Button className="w-full bg-blue-500/40 hover:bg-blue-700 text-white">
-                                    <EyeIcon className="w-5 h-5 text-white" />
-                                    You have seen this film
+                                <Button variant="secondary" className="w-full text-white">
+                                    <EyeIcon className="w-5 h-5" />
+                                    Watch
                                 </Button>
-                                <Button className="w-full bg-red-500/40 hover:bg-red-700 text-white">
-                                    <HeartIcon className="w-5 h-5 text-white" />
-                                    You liked this film
+                                <Button variant="secondary" className="w-full text-white">
+                                    <HeartIcon className="w-5 h-5" />
+                                    Like
                                 </Button>
-                                <Button variant="secondary" className="w-full">
-                                    <ListIcon className="w-5 h-5 text-white" />
-                                    Add to watchlist
+                                <Button variant="secondary" className="w-full text-white">
+                                    <StarIcon className="w-5 h-5" />
+                                    Rate
+                                </Button>
+                                <Button variant="secondary" className="w-full text-white">
+                                    <ListIcon className="w-5 h-5" />
+                                    Watchlisted
                                 </Button>
                             </div>
                         </div>
