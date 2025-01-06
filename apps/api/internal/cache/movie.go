@@ -39,6 +39,10 @@ func GetTMDBMovie(id string) (*structs.TMDBMovie, bool, error) {
 		return nil, false, fmt.Errorf("failed to query TMDB: %w", err)
 	}
 
+	if movie.ID == 0 {
+		return nil, false, fmt.Errorf("movie not found")
+	}
+
 	// Cache the result
 	if err := setMovie(id, movie); err != nil {
 		// Log the error but don't fail the request

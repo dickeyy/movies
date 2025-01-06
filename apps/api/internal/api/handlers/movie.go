@@ -10,7 +10,7 @@ import (
 func GetMovie(c *gin.Context) {
 	id := c.Param("id")
 
-	movie, cacheHit, err := cache.GetTMDBMovie(id)
+	movie, ch, err := cache.GetTMDBMovie(id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -23,6 +23,6 @@ func GetMovie(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"movie": movie,
-		"cache": cacheHit,
+		"cache": ch,
 	})
 }
