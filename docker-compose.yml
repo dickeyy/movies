@@ -2,18 +2,22 @@ version: "3.8"
 
 services:
   web:
-    build: ./apps/web
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3000"
     environment:
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     depends_on:
       - api
 
   api:
-    build: ./apps/api
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8080"
     environment:
       - ENV=${ENV}
       - PORT=${PORT}
