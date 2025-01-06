@@ -34,7 +34,7 @@ func GetTMDBMovie(id string) (*structs.TMDBMovie, bool, error) {
 	}
 
 	// Not found in cache or error occurred, query TMDB
-	movie, err := lib.QueryTMDBMovie(id)
+	movie, err := lib.QueryTMDBMovie(id, "en-US") // Default to English for now
 	if err != nil {
 		return nil, false, fmt.Errorf("failed to query TMDB: %w", err)
 	}

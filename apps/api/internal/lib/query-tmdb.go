@@ -10,8 +10,8 @@ import (
 	"github.com/dickeyy/movies/apps/api/internal/structs"
 )
 
-func QueryTMDBMovie(id string) (*structs.TMDBMovie, error) {
-	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US&api_key=%s", id, config.Config.TMDB.APIKey)
+func QueryTMDBMovie(id string, lang string) (*structs.TMDBMovie, error) {
+	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=%s&api_key=%s", id, lang, config.Config.TMDB.APIKey)
 
 	req, _ := http.NewRequest("GET", url, nil)
 
