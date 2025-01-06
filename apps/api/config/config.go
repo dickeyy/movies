@@ -31,7 +31,7 @@ func Init() *ConfigType {
 	// Set default values
 	Config = &ConfigType{
 		Env:  getEnvWithDefault("ENV", "prod"),
-		Port: getEnvWithDefault("PORT", "8080"),
+		Port: getEnvWithDefault("API_PORT", "8080"),
 		TMDB: struct {
 			APIKey string
 		}{

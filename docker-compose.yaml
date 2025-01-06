@@ -13,6 +13,6 @@ services:
       dockerfile: Dockerfile
     environment:
       - ENV=${ENV}
-      - PORT=${PORT}
+      - API_PORT=${API_PORT}
       - TMDB_API_KEY=${TMDB_API_KEY}
       - REDIS_URL=${REDIS_URL}
