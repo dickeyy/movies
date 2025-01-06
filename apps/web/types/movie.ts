@@ -2,12 +2,13 @@
 export interface TMDBMovie {
     adult: boolean;
     backdrop_path: string;
-    belongs_to_collection: any | null; // Could be defined as a specific type if needed
+    belongs_to_collection: Collection | null;
     budget: number;
     genres: Genre[];
     homepage: string;
     id: number;
     imdb_id: string;
+    origin_country: string[];
     original_language: string;
     original_title: string;
     overview: string;
@@ -16,6 +17,7 @@ export interface TMDBMovie {
     production_companies: Company[];
     production_countries: Country[];
     release_date: string;
+    release_dates: ReleaseDatesWrapper;
     revenue: number;
     runtime: number;
     spoken_languages: Language[];
@@ -25,6 +27,31 @@ export interface TMDBMovie {
     video: boolean;
     vote_average: number;
     vote_count: number;
+}
+
+export interface Collection {
+    id: number;
+    name: string;
+    poster_path: string;
+    backdrop_path: string;
+}
+
+export interface ReleaseDatesWrapper {
+    results: ReleaseDateCountry[];
+}
+
+export interface ReleaseDateCountry {
+    iso_3166_1: string;
+    release_dates: ReleaseDate[];
+}
+
+export interface ReleaseDate {
+    certification: string;
+    descriptors: string[];
+    iso_639_1: string;
+    note: string;
+    release_date: string;
+    type: number;
 }
 
 export interface Genre {

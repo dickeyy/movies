@@ -11,7 +11,7 @@ import (
 )
 
 func QueryTMDBMovie(id string, lang string) (*structs.TMDBMovie, error) {
-	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=%s&api_key=%s", id, lang, config.Config.TMDB.APIKey)
+	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=%s&api_key=%s&append_to_response=release_dates", id, lang, config.Config.TMDB.APIKey)
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -33,6 +33,18 @@ func QueryTMDBMovie(id string, lang string) (*structs.TMDBMovie, error) {
 	err = json.Unmarshal(body, &movie)
 	if err != nil {
 		return nil, err
+	}
+
+	// filter to only keep US release dates
+	if movie.ReleaseDates.Results != nil {
+		var filteredResults []structs.ReleaseDateCountry
+		for _, result := range movie.ReleaseDates.Results {
+			if result.ISO_3166_1 == "US" {
+				filteredResults = append(filteredResults, result)
+				break
+			}
+		}
+		movie.ReleaseDates.Results = filteredResults
 	}
 
 	return &movie, nil
