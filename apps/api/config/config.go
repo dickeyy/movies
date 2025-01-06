@@ -12,6 +12,9 @@ import (
 type ConfigType struct {
 	Env  string
 	Port string
+	TMDB struct {
+		Token string
+	}
 }
 
 var Config *ConfigType
@@ -26,6 +29,11 @@ func Init() *ConfigType {
 	Config = &ConfigType{
 		Env:  getEnvWithDefault("ENV", "prod"),
 		Port: getEnvWithDefault("PORT", "8080"),
+		TMDB: struct {
+			Token string
+		}{
+			Token: getEnvWithDefault("TMDB_TOKEN", ""),
+		},
 	}
 
 	// Configure logging
