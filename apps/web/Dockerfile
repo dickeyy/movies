@@ -1,4 +1,4 @@
-FROM nixpacks/nixpacks AS builder
+FROM railwayapp/nixpacks AS builder
 
 WORKDIR /app
 COPY . .
@@ -10,7 +10,7 @@ RUN nixpacks build . \
     --build-cmd "bun run build" \
     --start-cmd "bun start"
 
-FROM nixpacks/nixpacks
+FROM railwayapp/nixpacks
 COPY --from=builder /app /app
 WORKDIR /app
 EXPOSE 3000

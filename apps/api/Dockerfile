@@ -1,4 +1,4 @@
-FROM nixpacks/nixpacks AS builder
+FROM railwayapp/nixpacks AS builder
 
 WORKDIR /app
 COPY . .
@@ -9,7 +9,7 @@ RUN nixpacks build . \
     --build-cmd "go build -o main ." \
     --start-cmd "./main"
 
-FROM nixpacks/nixpacks
+FROM railwayapp/nixpacks
 COPY --from=builder /app /app
 WORKDIR /app
 EXPOSE 8080
