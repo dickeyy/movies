@@ -1,17 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { TMDBMovie } from "@/types/movie";
 import { EllipsisIcon, EyeIcon, HeartIcon, ListIcon, StarHalfIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+interface MovieResponse {
+    movie: TMDBMovie;
+    cache: boolean;
+}
+
 export default async function MoviePage({ params }: { params: Promise<{ id: string }> }) {
     const id = (await params).id;
-    const data = await fetch(`https://api.movies.kyle.so/movie/${id}`, {
+    const data = (await fetch(`https://api.movies.kyle.so/movie/${id}`, {
         headers: {
             "Content-Type": "application/json"
         }
-    }).then((res) => res.json());
+    }).then((res) => res.json())) as MovieResponse;
 
     if (!data.movie.id) {
         return <div>Movie not found</div>;
@@ -101,7 +107,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                                         month: "long",
                                         day: "numeric"
                                     })}{" "}
-                                    ({movie.origin_country[0]})
+                                    ({movie.production_countries[0].iso_3166_1})
                                 </p>
                                 <p>·</p>
                                 <div className="flex flex-row gap-1 items-center">
