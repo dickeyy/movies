@@ -4,7 +4,8 @@ services:
   web:
     build:
       context: ./apps/web
-      dockerfile: Dockerfile
+      docker:
+        builder: nixpacks
     ports:
       - "3000:3000"
     environment:
@@ -15,7 +16,8 @@ services:
   api:
     build:
       context: ./apps/api
-      dockerfile: Dockerfile
+      docker:
+        builder: nixpacks
     ports:
       - "8080:8080"
     environment:
