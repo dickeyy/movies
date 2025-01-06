@@ -7,10 +7,9 @@ import Link from "next/link";
 
 export default async function MoviePage({ params }: { params: Promise<{ id: string }> }) {
     const id = (await params).id;
-    const data = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {
+    const data = await fetch(`https://api.movies.kyle.so/movie/${id}`, {
         headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.TMDB_TOKEN}`
+            "Content-Type": "application/json"
         }
     }).then((res) => res.json());
 
@@ -148,6 +147,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
 }
 
 function MovieRating() {
+    // TODO: implement
     return (
         <div className="border w-fit px-1 rounded border-white/40 h-fit text-white/70 text-sm">
             <p>R</p>
