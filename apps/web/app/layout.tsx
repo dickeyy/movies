@@ -25,6 +25,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
+            <head>
+                <script
+                    defer
+                    data-domain="movies.kyle.so"
+                    src="https://a.kyle.so/js/script.js"
+                ></script>
+            </head>
             <body
                 className={`bg-background min-h-screen overflow-auto font-sans antialiased ${geistSans.variable} ${geistMono.variable}`}
             >
