@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 
+	"github.com/dickeyy/movies/apps/api/config"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
@@ -23,9 +24,31 @@ func loggerMiddleware() gin.HandlerFunc {
 
 func cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "*")
+		// Set allowed origins based on environment
+		if config.Config.Env == "dev" {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		} else {
+			origin := c.Request.Header.Get("Origin")
+			allowedOrigins := []string{
+				"https://movies.kyle.so",
+				"https://www.movies.kyle.so",
+			}
 
+			// Check if the request origin is in our allowed list
+			for _, allowed := range allowedOrigins {
+				if origin == allowed {
+					c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
+					break
+				}
+			}
+		}
+
+		// Common headers for all environments
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		// Handle preflight requests
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(http.StatusOK)
 			return
