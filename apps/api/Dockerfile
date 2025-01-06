@@ -9,5 +9,4 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -o /movies-api
 
-EXPOSE 8081
 CMD ["/movies-api"]
