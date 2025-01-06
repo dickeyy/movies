@@ -13,9 +13,11 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
         }
     }).then((res) => res.json());
 
-    if (!data.id) {
+    if (!data.movie.id) {
         return <div>Movie not found</div>;
     }
+
+    const movie = data.movie;
 
     return (
         <div className="relative min-h-screen">
@@ -23,7 +25,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
             <div className="absolute inset-0">
                 <div className="relative w-full h-full">
                     <Image
-                        src={`https://media.themoviedb.org/t/p/original/${data.backdrop_path}`}
+                        src={`https://media.themoviedb.org/t/p/original/${movie.backdrop_path}`}
                         alt="background"
                         fill
                         className="object-cover"
@@ -41,7 +43,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                     <div className="flex flex-col md:flex-row justify-between gap-8 items-start max-w-4xl">
                         <div className="flex flex-col gap-2 justify-center items-center w-full">
                             <Image
-                                src={`https://media.themoviedb.org/t/p/original/${data.poster_path}`}
+                                src={`https://media.themoviedb.org/t/p/original/${movie.poster_path}`}
                                 alt="cover"
                                 width={300}
                                 height={450}
@@ -63,47 +65,47 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                             </div>
                         </div>
                         <div className="flex flex-col gap-1">
-                            {new Date(data.release_date) > new Date() && (
+                            {new Date(movie.release_date) > new Date() && (
                                 <Badge variant="destructive" className="w-fit mb-2">
                                     Upcoming
                                 </Badge>
                             )}
                             <div className="flex flex-row justify-between w-full items-center">
                                 <div className="flex flex-row space-x-2 items-center">
-                                    <h1 className="text-3xl font-bold text-white">{data.title}</h1>
+                                    <h1 className="text-3xl font-bold text-white">{movie.title}</h1>
                                     <Link
-                                        href={`/year/${data.release_date.split("-")[0]}`}
+                                        href={`/year/${movie.release_date.split("-")[0]}`}
                                         className="text-foreground/50 decoration-foreground/50 hover:underline hover:text-foreground transition-colors"
                                     >
-                                        ({data.release_date.split("-")[0]})
+                                        ({movie.release_date.split("-")[0]})
                                     </Link>
                                 </div>
                                 <Button variant="ghost" className="h-fit px-1 py-1">
                                     <EllipsisIcon className="w-5 h-5 text-white/50" />
                                 </Button>
                             </div>
-                            <p className="text-white/80 text-sm">{data.tagline}</p>
+                            <p className="text-white/80 text-sm">{movie.tagline}</p>
                             <div className="flex flex-row gap-1 items-center mt-2">
                                 <StarIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
                                 <StarIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
                                 <StarIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
                                 <StarHalfIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
-                                <p className="text-white/70 text-sm">3.5/5 ({data.vote_count})</p>
+                                <p className="text-white/70 text-sm">3.5/5 ({movie.vote_count})</p>
                             </div>
                             <div className="flex flex-row gap-2 items-center text-white/90 mt-4">
                                 <MovieRating />
                                 <p>·</p>
                                 <p className="text-white/70 text-sm">
-                                    {new Date(data.release_date).toLocaleDateString("en-US", {
+                                    {new Date(movie.release_date).toLocaleDateString("en-US", {
                                         year: "numeric",
                                         month: "long",
                                         day: "numeric"
                                     })}{" "}
-                                    ({data.origin_country[0]})
+                                    ({movie.origin_country[0]})
                                 </p>
                                 <p>·</p>
                                 <div className="flex flex-row gap-1 items-center">
-                                    {data.genres.map((genre: any, i: number) => (
+                                    {movie.genres.map((genre: any, i: number) => (
                                         <div
                                             key={genre.id}
                                             className="flex flex-row items-center text-white/70 text-sm"
@@ -114,12 +116,12 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                                             >
                                                 {genre.name}
                                             </Link>
-                                            {i !== data.genres.length - 1 && <p>,</p>}
+                                            {i !== movie.genres.length - 1 && <p>,</p>}
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                            <p className="text-white/90 text-sm mt-4">{data.overview}</p>
+                            <p className="text-white/90 text-sm mt-4">{movie.overview}</p>
                             <div className="flex flex-col md:flex-row gap-2 items-center mt-8">
                                 <Button variant="secondary" className="w-full text-white">
                                     <EyeIcon className="w-5 h-5" />
