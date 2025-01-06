@@ -37,8 +37,8 @@ func NewServer(cfg *config.ConfigType) *Server {
 }
 
 func (s *Server) registerRoutes() {
-	s.router.GET("/", h.HandleBase)
-	s.router.GET("/ping", h.HandlePing)
+	s.router.GET("/", h.GetBase)
+	s.router.GET("/ping", h.GetPing)
 }
 
 func (s *Server) Start() error {

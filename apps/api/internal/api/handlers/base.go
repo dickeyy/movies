@@ -6,10 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func HandleBase(c *gin.Context) {
+func GetBase(c *gin.Context) {
 	c.String(http.StatusOK, "ok")
 }
 
-func HandlePing(c *gin.Context) {
+func GetPing(c *gin.Context) {
 	c.String(http.StatusOK, "pong")
 }
