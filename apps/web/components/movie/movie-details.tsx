@@ -1,4 +1,5 @@
 import { abbreviateNumber } from "@/lib/utils";
+import { Genre } from "@/types/movie";
 import { EllipsisIcon, EyeIcon, HeartIcon, ListIcon, StarHalfIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
@@ -89,6 +90,68 @@ export function MovieRating({ rating, votes }: { rating: number; votes: number }
             <span className="text-white/70 text-sm">
                 {rating.toFixed(1)}/5 ({votes.toFixed(0)})
             </span>
+        </div>
+    );
+}
+
+export function MovieCertificationDateAndGenres({
+    cert,
+    releaseDate,
+    genres
+}: {
+    cert: string;
+    releaseDate: string;
+    genres: Genre[];
+}) {
+    return (
+        <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
+            <div className="border px-1 rounded border-white/40 text-white/70 text-sm">{cert}</div>
+            <span>·</span>
+            <span className="text-white/70">
+                {new Date(releaseDate).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                })}
+                (US)
+            </span>
+            <span>·</span>
+            <div className="flex flex-wrap items-center gap-1">
+                {genres.map((genre: Genre, i: number) => (
+                    <span key={genre.id}>
+                        <Link
+                            href={`/genre/${genre.id}`}
+                            className="text-white/70 hover:underline hover:text-white transition-colors"
+                        >
+                            {genre.name}
+                        </Link>
+                        {i !== genres.length - 1 && ", "}
+                    </span>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+export function MovieActionButtons() {
+    return (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
+            <Button variant="secondary" className="w-full text-white">
+                <EyeIcon className="w-5 h-5 mr-2" />
+                Watch
+            </Button>
+            <Button variant="secondary" className="w-full text-white">
+                <HeartIcon className="w-5 h-5 mr-2" />
+                Like
+            </Button>
+            <Button variant="secondary" className="w-full text-white">
+                <StarIcon className="w-5 h-5 mr-2" />
+                Rate
+            </Button>
+            <Button variant="secondary" className="w-full text-white">
+                <ListIcon className="w-5 h-5 mr-2" />
+                Watchlist
+            </Button>
         </div>
     );
 }

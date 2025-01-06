@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+    MovieActionButtons,
+    MovieCertificationDateAndGenres,
     MovieDetailsHeader,
     MovieRating,
     MovieStats,
     MovieTagline
 } from "@/components/movie/movie-details";
 import { MovieBackdrop, MoviePoster } from "@/components/movie/movie-images";
-import { Button } from "@/components/ui/button";
 import { TMDBMovie } from "@/types/movie";
-import { EyeIcon, HeartIcon, ListIcon, StarIcon } from "lucide-react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 interface MovieResponse {
@@ -65,61 +64,20 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                                 />
 
                                 {/* Movie Info */}
-                                <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
-                                    <MovieCerfification
-                                        cert={
-                                            movie.release_dates.results[0].release_dates[0]
-                                                .certification
-                                        }
-                                    />
-                                    <span>·</span>
-                                    <span className="text-white/70">
-                                        {new Date(movie.release_date).toLocaleDateString("en-US", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric"
-                                        })}
-                                        {movie.production_countries[0]?.iso_3166_1 &&
-                                            ` (${movie.production_countries[0].iso_3166_1})`}
-                                    </span>
-                                    <span>·</span>
-                                    <div className="flex flex-wrap items-center gap-1">
-                                        {movie.genres.map((genre: any, i: number) => (
-                                            <span key={genre.id}>
-                                                <Link
-                                                    href={`/genre/${genre.id}`}
-                                                    className="text-white/70 hover:underline hover:text-white transition-colors"
-                                                >
-                                                    {genre.name}
-                                                </Link>
-                                                {i !== movie.genres.length - 1 && ", "}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
+                                <MovieCertificationDateAndGenres
+                                    cert={
+                                        movie.release_dates.results[0].release_dates[0]
+                                            .certification
+                                    }
+                                    releaseDate={movie.release_date}
+                                    genres={movie.genres}
+                                />
 
                                 {/* Overview */}
                                 <p className="text-white/90 text-sm mt-2">{movie.overview}</p>
 
                                 {/* Action Buttons */}
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
-                                    <Button variant="secondary" className="w-full text-white">
-                                        <EyeIcon className="w-5 h-5 mr-2" />
-                                        Watch
-                                    </Button>
-                                    <Button variant="secondary" className="w-full text-white">
-                                        <HeartIcon className="w-5 h-5 mr-2" />
-                                        Like
-                                    </Button>
-                                    <Button variant="secondary" className="w-full text-white">
-                                        <StarIcon className="w-5 h-5 mr-2" />
-                                        Rate
-                                    </Button>
-                                    <Button variant="secondary" className="w-full text-white">
-                                        <ListIcon className="w-5 h-5 mr-2" />
-                                        Watchlist
-                                    </Button>
-                                </div>
+                                <MovieActionButtons />
                             </div>
                         </div>
                     </div>
@@ -127,8 +85,4 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
             </main>
         </div>
     );
-}
-
-function MovieCerfification({ cert }: { cert: string }) {
-    return <div className="border px-1 rounded border-white/40 text-white/70 text-sm">{cert}</div>;
 }
