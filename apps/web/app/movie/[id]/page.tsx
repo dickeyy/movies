@@ -7,6 +7,7 @@ import {
     MovieTagline
 } from "@/components/movie/movie-details";
 import { MovieBackdrop, MoviePoster } from "@/components/movie/movie-images";
+import Navbar from "@/components/navbar";
 import { TMDBMovie } from "@/types/movie";
 import { notFound } from "next/navigation";
 
@@ -31,6 +32,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
 
     return (
         <div className="relative min-h-screen w-full flex items-center justify-center">
+            <Navbar />
             {/* Banner background with gradient overlay */}
             <MovieBackdrop src={movie.backdrop_path} />
 
