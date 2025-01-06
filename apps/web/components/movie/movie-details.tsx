@@ -105,7 +105,9 @@ export function MovieCertificationDateAndGenres({
 }) {
     return (
         <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
-            <div className="border px-1 rounded border-white/40 text-white/70 text-sm">{cert}</div>
+            <div className="border px-1 rounded border-white/40 text-white/70 text-sm">
+                {cert || "NR"}
+            </div>
             <span>·</span>
             <span className="text-white/70">
                 {new Date(releaseDate).toLocaleDateString("en-US", {
