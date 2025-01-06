@@ -11,7 +11,7 @@ import (
 )
 
 func QueryTMDBMovie(id string) (*structs.TMDBMovie, error) {
-	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US?api_key=%s", id, config.Config.TMDB.APIKey)
+	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US&api_key=%s", id, config.Config.TMDB.APIKey)
 
 	req, _ := http.NewRequest("GET", url, nil)
 

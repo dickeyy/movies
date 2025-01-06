@@ -13,13 +13,13 @@ interface MovieResponse {
 
 export default async function MoviePage({ params }: { params: Promise<{ id: string }> }) {
     const id = (await params).id;
-    const data = (await fetch(`https://api.movies.kyle.so/movie/${id}`, {
+    const data = (await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie/${id}`, {
         headers: {
             "Content-Type": "application/json"
         }
     }).then((res) => res.json())) as MovieResponse;
 
-    if (!data.movie.id) {
+    if (!data.movie || !data.movie.id) {
         return <div>Movie not found</div>;
     }
 
