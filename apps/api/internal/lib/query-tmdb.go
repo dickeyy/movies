@@ -2,6 +2,7 @@ package lib
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -10,12 +11,11 @@ import (
 )
 
 func QueryTMDBMovie(id string) (*structs.TMDBMovie, error) {
-	url := "https://api.themoviedb.org/3/movie/" + id + "?language=en-US"
+	url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%s?language=en-US?api_key=%s", id, config.Config.TMDB.APIKey)
 
 	req, _ := http.NewRequest("GET", url, nil)
 
 	req.Header.Add("accept", "application/json")
-	req.Header.Add("Authorization", "Bearer "+config.Config.TMDB.Token)
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {

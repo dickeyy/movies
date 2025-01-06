@@ -13,7 +13,7 @@ type ConfigType struct {
 	Env  string
 	Port string
 	TMDB struct {
-		Token string
+		APIKey string
 	}
 	Redis struct {
 		URL string
@@ -33,9 +33,9 @@ func Init() *ConfigType {
 		Env:  getEnvWithDefault("ENV", "prod"),
 		Port: getEnvWithDefault("PORT", "8080"),
 		TMDB: struct {
-			Token string
+			APIKey string
 		}{
-			Token: getEnvWithDefault("TMDB_TOKEN", ""),
+			APIKey: getEnvWithDefault("TMDB_API_KEY", ""),
 		},
 		Redis: struct {
 			URL string
