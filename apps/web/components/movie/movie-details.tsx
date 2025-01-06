@@ -1,5 +1,5 @@
 import { abbreviateNumber } from "@/lib/utils";
-import { EllipsisIcon, EyeIcon, HeartIcon, ListIcon } from "lucide-react";
+import { EllipsisIcon, EyeIcon, HeartIcon, ListIcon, StarHalfIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -64,4 +64,31 @@ export function MovieDetailsHeader({ title, releaseDate }: { title: string; rele
 
 export function MovieTagline({ tagline }: { tagline: string }) {
     return <p className="text-white/80 text-sm italic">{tagline}</p>;
+}
+
+export function MovieRating({ rating, votes }: { rating: number; votes: number }) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+
+    return (
+        <div className="flex items-center gap-2">
+            <div className="flex">
+                {/* Full stars */}
+                {Array.from({ length: fullStars }, (_, i) => (
+                    <StarIcon
+                        key={`full-${i}`}
+                        className="w-5 h-5 fill-yellow-500 text-yellow-500"
+                    />
+                ))}
+
+                {/* Half star */}
+                {hasHalfStar && (
+                    <StarHalfIcon className="w-5 h-5 fill-yellow-500 text-yellow-500" />
+                )}
+            </div>
+            <span className="text-white/70 text-sm">
+                {rating.toFixed(1)}/5 ({votes.toFixed(0)})
+            </span>
+        </div>
+    );
 }

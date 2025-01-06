@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MovieDetailsHeader, MovieStats, MovieTagline } from "@/components/movie/movie-details";
+import {
+    MovieDetailsHeader,
+    MovieRating,
+    MovieStats,
+    MovieTagline
+} from "@/components/movie/movie-details";
 import { MovieBackdrop, MoviePoster } from "@/components/movie/movie-images";
 import { Button } from "@/components/ui/button";
 import { TMDBMovie } from "@/types/movie";
-import { EyeIcon, HeartIcon, ListIcon, StarHalfIcon, StarIcon } from "lucide-react";
+import { EyeIcon, HeartIcon, ListIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -54,17 +59,10 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                                 {movie.tagline && <MovieTagline tagline={movie.tagline} />}
 
                                 {/* Rating */}
-                                <div className="flex items-center gap-2">
-                                    <div className="flex">
-                                        <StarIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
-                                        <StarIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
-                                        <StarIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
-                                        <StarHalfIcon className="w-5 h-5 fill-yellow-500 text-transparent" />
-                                    </div>
-                                    <span className="text-white/70 text-sm">
-                                        3.5/5 ({movie.vote_count})
-                                    </span>
-                                </div>
+                                <MovieRating
+                                    rating={movie.vote_average / 2}
+                                    votes={movie.vote_count / 2}
+                                />
 
                                 {/* Movie Info */}
                                 <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
