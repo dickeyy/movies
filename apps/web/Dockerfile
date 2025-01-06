@@ -1,17 +1,24 @@
-FROM railwayapp/nixpacks AS builder
+# Use the official Bun image
+FROM oven/bun:1
 
+# Set working directory
 WORKDIR /app
+
+# Copy package files
+COPY package.json .
+COPY bun.lockb .
+
+# Install dependencies
+RUN bun install --frozen-lockfile
+
+# Copy the rest of the application
 COPY . .
 
-RUN nixpacks build . \
-    --name web \
-    --pkgs bun \
-    --install-cmd "bun install" \
-    --build-cmd "bun run build" \
-    --start-cmd "bun start"
+# Build the application
+RUN bun run build
 
-FROM railwayapp/nixpacks
-COPY --from=builder /app /app
-WORKDIR /app
+# Expose the port the app runs on
 EXPOSE 3000
+
+# Start the application
 CMD ["bun", "start"]

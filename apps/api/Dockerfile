@@ -1,16 +1,23 @@
-FROM railwayapp/nixpacks AS builder
+# Use golang image for building
+FROM golang:1.23.4-alpine
 
+# Set working directory
 WORKDIR /app
+
+# Copy go mod and sum files
+COPY go.mod go.sum ./
+
+# Download dependencies
+RUN go mod download
+
+# Copy the source code
 COPY . .
 
-RUN nixpacks build . \ 
-    --name api \
-    --pkgs go@latest \ 
-    --build-cmd "go build -o main ." \
-    --start-cmd "./main"
+# Build the application
+RUN CGO_ENABLED=0 go build -o main .
 
-FROM railwayapp/nixpacks
-COPY --from=builder /app /app
-WORKDIR /app
+# Expose the port the app runs on
 EXPOSE 8080
+
+# Run the application
 CMD ["./main"]
