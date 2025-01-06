@@ -2,10 +2,7 @@ version: "3.8"
 
 services:
   web:
-    build:
-      context: ./apps/web
-      docker:
-        builder: nixpacks
+    build: ./apps/web
     ports:
       - "3000:3000"
     environment:
@@ -14,10 +11,7 @@ services:
       - api
 
   api:
-    build:
-      context: ./apps/api
-      docker:
-        builder: nixpacks
+    build: ./apps/api
     ports:
       - "8080:8080"
     environment:
