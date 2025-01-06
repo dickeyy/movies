@@ -15,6 +15,9 @@ type ConfigType struct {
 	TMDB struct {
 		Token string
 	}
+	Redis struct {
+		URL string
+	}
 }
 
 var Config *ConfigType
@@ -33,6 +36,11 @@ func Init() *ConfigType {
 			Token string
 		}{
 			Token: getEnvWithDefault("TMDB_TOKEN", ""),
+		},
+		Redis: struct {
+			URL string
+		}{
+			URL: getEnvWithDefault("REDIS_URL", ""),
 		},
 	}
 

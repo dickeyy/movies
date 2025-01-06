@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/dickeyy/movies/apps/api/config"
 	"github.com/dickeyy/movies/apps/api/internal/api"
+	"github.com/dickeyy/movies/apps/api/internal/services"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -16,6 +17,9 @@ func main() {
 	if cfg.Env != "dev" {
 		gin.SetMode(gin.ReleaseMode)
 	}
+
+	// connect services
+	services.ConnectRedis()
 
 	// Create and start server
 	server := api.NewServer(cfg)

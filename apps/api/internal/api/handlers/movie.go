@@ -3,14 +3,14 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/dickeyy/movies/apps/api/internal/lib"
+	"github.com/dickeyy/movies/apps/api/internal/cache"
 	"github.com/gin-gonic/gin"
 )
 
 func GetMovie(c *gin.Context) {
 	id := c.Param("id")
 
-	movie, err := lib.QueryTMDBMovie(id)
+	movie, cacheHit, err := cache.GetTMDBMovie(id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -21,5 +21,8 @@ func GetMovie(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"movie": movie})
+	c.JSON(http.StatusOK, gin.H{
+		"movie": movie,
+		"cache": cacheHit,
+	})
 }
