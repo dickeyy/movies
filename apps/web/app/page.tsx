@@ -14,7 +14,12 @@ export default function Home() {
                     <div className="flex flex-col items-start justify-center space-y-2">
                         <div className="flex w-full flex-row items-center justify-between font-mono text-sm text-foreground/70">
                             <p>movies.kyle.so</p>
-                            <p>Coming Soon</p>
+                            <p className="group relative">
+                                Coming Soon
+                                <span className="absolute ml-0 translate-x-[-px] transform text-lg opacity-0 transition-all duration-150 ease-in-out group-hover:ml-1 group-hover:translate-x-0 group-hover:opacity-100">
+                                    ™
+                                </span>
+                            </p>
                         </div>
                         <h1 className="text-2xl font-medium">
                             A free and open-source{" "}
