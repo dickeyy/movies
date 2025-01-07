@@ -1,33 +1,63 @@
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
     return (
         <div className="flex min-h-screen flex-col items-center">
             <Navbar active="browse" />
-            <main className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-                <div className="flex flex-col items-center gap-8 sm:items-start">
-                    <div className="flex flex-col items-start justify-center space-y-2">
-                        <p className="text-sm text-foreground/70">movies.kyle.so</p>
-                        <h1 className="text-2xl font-medium">
-                            A free and open-source{" "}
-                            <span>
-                                <Link
-                                    href="https://letterboxd.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-primary underline decoration-foreground/20 underline-offset-4 transition-colors hover:decoration-foreground"
-                                >
-                                    Letterboxd
-                                </Link>
-                            </span>{" "}
-                            alternative.
-                        </h1>
-                    </div>
+            <main className="flex flex-1 flex-col items-start justify-center gap-2 px-4 py-12 pt-24 sm:px-6 lg:px-8">
+                <div className="flex w-full flex-row items-center justify-between">
+                    <h1 className="text-3xl font-medium">Movies</h1>
+                </div>
+                <p className="font-mono text-xs text-foreground/40">
+                    1,245,301 found based on your search.
+                </p>
+                <Separator />
+
+                <div className="mt-2 grid grid-cols-2 items-center gap-4 md:grid-cols-4 lg:grid-cols-6">
+                    <Skelys />
                 </div>
             </main>
             <Footer />
         </div>
+    );
+}
+
+function Skelys() {
+    return (
+        <>
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+            <Skeleton className="aspect-[2/3] w-36 rounded-lg" />
+        </>
     );
 }
