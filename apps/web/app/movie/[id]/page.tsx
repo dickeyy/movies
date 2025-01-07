@@ -1,3 +1,4 @@
+import Footer from "@/components/footer";
 import {
     MovieActionButtons,
     MovieCertificationDateAndGenres,
@@ -31,13 +32,13 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
     const movie = data.movie;
 
     return (
-        <div className="relative min-h-screen w-full flex items-center justify-center">
+        <div className="relative min-h-screen w-full flex items-center justify-center flex-col">
             <Navbar />
             {/* Banner background with gradient overlay */}
             <MovieBackdrop src={movie.backdrop_path} />
 
             {/* Content */}
-            <main className="relative w-full px-4 py-8 flex items-center justify-center sm:mt-0 mt-12">
+            <main className="relative flex-1 w-full px-4 py-8 flex items-center justify-center sm:mt-0 mt-12">
                 <div className="max-w-6xl w-full">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
                         {/* Left Column - Poster and Stats */}
@@ -84,6 +85,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                     </div>
                 </div>
             </main>
+            <Footer />
         </div>
     );
 }
