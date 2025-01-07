@@ -37,7 +37,7 @@ func CloseDB() {
 
 func initSchema() error {
 	// read the schema file
-	schemaSQL, err := os.ReadFile("sql/create-tables.sql")
+	schemaSQL, err := os.ReadFile("sql/schema.sql")
 	if err != nil {
 		return err
 	}
