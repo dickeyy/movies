@@ -12,11 +12,11 @@ export default function Footer() {
                 </Link>
             </p>
             <div className="flex flex-row items-center gap-4">
-                <Link href="https://bsky.app/profile/scroll.blue" target="_blank">
-                    <BlueskyIcon className="h-4 w-4 fill-foreground/60 transition-colors duration-150 hover:fill-foreground" />
+                <Link href="https://bsky.app/profile/kyle.so" target="_blank">
+                    <BlueskyIcon className="h-4 w-4 fill-foreground/40 transition-colors duration-150 hover:fill-foreground" />
                 </Link>
-                <Link href="https://github.com/dickeyy/scroll-blue" target="_blank">
-                    <GitHubIcon className="h-4 w-4 fill-foreground/60 transition-colors duration-150 hover:fill-foreground" />
+                <Link href="https://github.com/dickeyy/movies" target="_blank">
+                    <GitHubIcon className="h-4 w-4 fill-foreground/40 transition-colors duration-150 hover:fill-foreground" />
                 </Link>
             </div>
         </footer>
