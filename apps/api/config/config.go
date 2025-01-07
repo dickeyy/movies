@@ -21,6 +21,9 @@ type ConfigType struct {
 	DB struct {
 		URL string
 	}
+	Clerk struct {
+		Key string
+	}
 }
 
 var Config *ConfigType
@@ -49,6 +52,11 @@ func Init() *ConfigType {
 			URL string
 		}{
 			URL: getEnvWithDefault("DB_URL", ""),
+		},
+		Clerk: struct {
+			Key string
+		}{
+			Key: getEnvWithDefault("CLERK_KEY", ""),
 		},
 	}
 

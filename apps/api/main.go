@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/clerk/clerk-sdk-go/v2"
 	"github.com/dickeyy/movies/apps/api/config"
 	"github.com/dickeyy/movies/apps/api/internal/api"
 	"github.com/dickeyy/movies/apps/api/internal/services"
@@ -21,6 +22,9 @@ func main() {
 	// connect services
 	services.ConnectRedis()
 	services.OpenDB()
+
+	// initialize clerk
+	clerk.SetKey(config.Config.Clerk.Key)
 
 	// Create and start server
 	server := api.NewServer(cfg)

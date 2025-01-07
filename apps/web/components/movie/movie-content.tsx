@@ -1,3 +1,5 @@
+"use client";
+
 import Footer from "@/components/footer";
 import {
     MovieActionButtons,
@@ -11,8 +13,7 @@ import { MovieBackdrop, MoviePoster } from "@/components/movie/movie-images";
 import Navbar from "@/components/navbar";
 import { TMDBMovie } from "@/types/movie";
 import { Rating } from "@/types/user";
-import { Metadata } from "next";
-import { headers as h } from "next/headers";
+import { useState } from "react";
 
 interface MovieResponse {
     movie: {
@@ -25,55 +26,15 @@ interface MovieResponse {
     error?: string;
 }
 
-type Props = {
-    params: Promise<{ id: string }>;
-};
+export default function MovieContent({
+    id,
+    initialData
+}: {
+    id: string;
+    initialData: MovieResponse;
+}) {
+    const [data] = useState<MovieResponse>(initialData); // Just use the initial data
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const id = (await params).id;
-    const data = (await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie/${id}`, {
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).then((res) => res.json())) as MovieResponse;
-
-    if (!data || !data.movie || !data.movie.tmdb || !data.movie.tmdb.id) {
-        return {};
-    }
-
-    return {
-        title: data.movie.tmdb.title + " | Reviews, Ratings, and Stats",
-        description: data.movie.tmdb.overview,
-        openGraph: {
-            title: data.movie.tmdb.title,
-            description: data.movie.tmdb.overview
-        }
-    };
-}
-
-async function getMovie(id: string): Promise<MovieResponse> {
-    const headersList = await h();
-    const authHeader = headersList.get("x-clerk-auth-token");
-
-    const headers: HeadersInit = {
-        "Content-Type": "application/json"
-    };
-
-    if (authHeader) {
-        headers["Authorization"] = `Bearer ${authHeader}`;
-    }
-
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie/${id}`, {
-        headers
-    }).then((res) => res.json());
-
-    return data;
-}
-
-export default async function MoviePage({ params }: Props) {
-    const id = (await params).id;
-
-    const data = await getMovie(id);
     if (!data || !data.movie || !data.movie.tmdb || !data.movie.tmdb.id) {
         return <div className="flex min-h-screen items-center justify-center">Movie not found</div>;
     }

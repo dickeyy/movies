@@ -2,11 +2,61 @@ package api
 
 import (
 	"net/http"
+	"strings"
 
+	"github.com/clerk/clerk-sdk-go/v2/jwt"
 	"github.com/dickeyy/movies/apps/api/config"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
+
+// RequireAuth is middleware that requires a valid Clerk session
+func requireAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Get the session JWT from the Authorization header
+		sessionToken := strings.TrimPrefix(c.GetHeader("Authorization"), "Bearer ")
+		if sessionToken == "" {
+			c.AbortWithStatusJSON(401, gin.H{"error": "No authorization token provided"})
+			return
+		}
+
+		// Verify the session token
+		claims, err := jwt.Verify(c.Request.Context(), &jwt.VerifyParams{
+			Token: sessionToken,
+		})
+		if err != nil {
+			c.AbortWithStatusJSON(401, gin.H{"error": "Invalid session token"})
+			return
+		}
+
+		// Store claims in gin context for the route handler
+		c.Set("session_claims", claims)
+		c.Set("user_id", claims.Subject)
+
+		c.Next()
+	}
+}
+
+// OptionalAuth is middleware that verifies a session if present but allows unauthed requests
+func optionalAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Get the session JWT from the Authorization header
+		sessionToken := strings.TrimPrefix(c.GetHeader("Authorization"), "Bearer ")
+		if sessionToken != "" {
+			// Try to verify the session token
+			claims, err := jwt.Verify(c.Request.Context(), &jwt.VerifyParams{
+				Token: sessionToken,
+			})
+			if err == nil {
+				// If verification succeeds, store claims in context
+				c.Set("session_claims", claims)
+				c.Set("user_id", claims.Subject)
+			}
+		}
+
+		c.Next()
+	}
+}
 
 func loggerMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {

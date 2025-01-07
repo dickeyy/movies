@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+	"time"
 
 	"github.com/dickeyy/movies/apps/api/internal/cache"
 	"github.com/dickeyy/movies/apps/api/internal/services"
@@ -9,6 +10,10 @@ import (
 )
 
 func GetMovieByID(id string) (*structs.Movie, error) {
+	// Create a context with timeout
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
 	var movie structs.Movie
 
 	// Get TMDB data
@@ -18,9 +23,16 @@ func GetMovieByID(id string) (*structs.Movie, error) {
 	}
 	movie.TMDB = *tmdb
 
+	// Use a transaction for both queries to ensure consistency
+	tx, err := services.DB.Begin(ctx)
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback(ctx) // Will rollback if not committed
+
 	// First get all the counts
-	err = services.DB.QueryRow(
-		context.Background(),
+	err = tx.QueryRow(
+		ctx,
 		`SELECT 
             COUNT(DISTINCT w.user_id) as watched_count,
             COUNT(DISTINCT l.user_id) as liked_count,
@@ -41,8 +53,8 @@ func GetMovieByID(id string) (*structs.Movie, error) {
 	}
 
 	// Then get the ratings in a separate query
-	rows, err := services.DB.Query(
-		context.Background(),
+	rows, err := tx.Query(
+		ctx,
 		`SELECT id, user_id, movie_id, rating, content, created_at, updated_at 
          FROM ratings 
          WHERE movie_id = $1`,
@@ -70,7 +82,18 @@ func GetMovieByID(id string) (*structs.Movie, error) {
 		}
 		ratings = append(ratings, r)
 	}
+
+	// Check for errors from iterating over rows
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
 	movie.Ratings = ratings
+
+	// Commit the transaction
+	if err := tx.Commit(ctx); err != nil {
+		return nil, err
+	}
 
 	return &movie, nil
 }
