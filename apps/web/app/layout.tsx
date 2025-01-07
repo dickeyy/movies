@@ -3,15 +3,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import "@/styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
-    subsets: ["latin"]
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
     subsets: ["latin"]
 });
 
@@ -26,6 +21,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
+        // hard coding this because docker is fucking with the env variables, and
+        // clerk throws an error when it tries to read the pub key from the env at buld time
+        // and it technically hasnt been set yet
+        // for now i'm hardcoding it, but i'll fix this later
         <ClerkProvider publishableKey={"pk_test_cmVhbC1zYWlsZmlzaC01Ny5jbGVyay5hY2NvdW50cy5kZXYk"}>
             <html lang="en" suppressHydrationWarning>
                 <head>
@@ -36,7 +35,7 @@ export default function RootLayout({
                     ></script>
                 </head>
                 <body
-                    className={`min-h-screen overflow-auto bg-background font-sans antialiased ${geistSans.variable} ${geistMono.variable}`}
+                    className={`min-h-screen overflow-auto bg-background font-sans antialiased ${geistSans.variable}`}
                 >
                     <ThemeProvider
                         attribute="class"

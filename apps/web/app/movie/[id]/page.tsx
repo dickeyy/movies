@@ -72,7 +72,9 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                                 {/* Rating */}
                                 <MovieRating
                                     rating={movie.vote_average / 2}
-                                    votes={data.movie.ratings.length / 2}
+                                    votes={
+                                        (data.movie.ratings && data.movie.ratings.length / 2) || 0
+                                    }
                                 />
 
                                 {/* Movie Info */}
