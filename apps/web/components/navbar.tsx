@@ -16,7 +16,7 @@ export default function Navbar({
                     <Link href="/">Home</Link>
                 </NavbarButton>
                 <NavbarButton isActive={active === "discover"}>
-                    <Link href="/">Discover</Link>
+                    <Link href="/browse">Browse</Link>
                 </NavbarButton>
                 <NavbarButton isActive={active === "sign-in"}>
                     <Link href="/sign-in">Sign In</Link>
@@ -46,7 +46,9 @@ function NavbarButton({
         <Button
             variant={variant as any}
             asChild
-            className={`h-fit rounded-full px-4 py-1 text-[14px]`}
+            className={`h-fit rounded-full px-4 py-1 text-[14px] ${
+                isActive ? "font-medium" : "font-normal"
+            }`}
         >
             {children}
         </Button>
