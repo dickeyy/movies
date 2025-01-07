@@ -41,6 +41,10 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/ping", h.GetPing)
 
 	s.router.GET("/movie/:id", h.GetMovie)
+
+	s.router.POST("/user", h.PostUser)
+	s.router.GET("/user/id/:id", h.GetUserByID)
+	s.router.GET("/user/username/:username", h.GetUserByUsername)
 }
 
 func (s *Server) Start() error {
