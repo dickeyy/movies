@@ -1,3 +1,5 @@
+import BlueskyIcon from "@/public/icons/bluesky.svg";
+import GitHubIcon from "@/public/icons/github.svg";
 import Link from "next/link";
 
 export default function Footer() {
@@ -9,6 +11,14 @@ export default function Footer() {
                     Kyle Dickey
                 </Link>
             </p>
+            <div className="flex flex-row items-center gap-4">
+                <Link href="https://bsky.app/profile/scroll.blue" target="_blank">
+                    <BlueskyIcon className="h-4 w-4 fill-foreground/60 transition-colors duration-150 hover:fill-foreground" />
+                </Link>
+                <Link href="https://github.com/dickeyy/scroll-blue" target="_blank">
+                    <GitHubIcon className="h-4 w-4 fill-foreground/60 transition-colors duration-150 hover:fill-foreground" />
+                </Link>
+            </div>
         </footer>
     );
 }
