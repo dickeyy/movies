@@ -4,18 +4,14 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
 
-export default function Navbar({
-    active
-}: {
-    active?: "home" | "discover" | "sign-up" | "sign-in";
-}) {
+export default function Navbar({ active }: { active?: "home" | "browse" | "sign-up" | "sign-in" }) {
     return (
         <nav className="bg-card/20 glass-blur fixed top-4 z-50 flex w-fit items-center justify-between rounded-full border p-1 shadow-md">
             <div className="flex items-center gap-1 sm:gap-2">
                 <NavbarButton isActive={active === "home"}>
                     <Link href="/">Home</Link>
                 </NavbarButton>
-                <NavbarButton isActive={active === "discover"}>
+                <NavbarButton isActive={active === "browse"}>
                     <Link href="/browse">Browse</Link>
                 </NavbarButton>
                 <NavbarButton isActive={active === "sign-in"}>
