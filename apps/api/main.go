@@ -20,10 +20,17 @@ func main() {
 
 	// connect services
 	services.ConnectRedis()
+	services.OpenDB()
 
 	// Create and start server
 	server := api.NewServer(cfg)
 	if err := server.Start(); err != nil {
 		log.Fatal().Err(err).Msg("Server failed to start")
 	}
+
+	// on exit, close services
+	defer func() {
+		services.DisconnectRedis()
+		services.CloseDB()
+	}()
 }

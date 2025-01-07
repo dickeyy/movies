@@ -18,6 +18,9 @@ type ConfigType struct {
 	Redis struct {
 		URL string
 	}
+	DB struct {
+		URL string
+	}
 }
 
 var Config *ConfigType
@@ -41,6 +44,11 @@ func Init() *ConfigType {
 			URL string
 		}{
 			URL: getEnvWithDefault("REDIS_URL", ""),
+		},
+		DB: struct {
+			URL string
+		}{
+			URL: getEnvWithDefault("DB_URL", ""),
 		},
 	}
 
