@@ -11,7 +11,38 @@ import { MovieBackdrop, MoviePoster } from "@/components/movie/movie-images";
 import Navbar from "@/components/navbar";
 import { TMDBMovie } from "@/types/movie";
 import { Rating } from "@/types/user";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+type Props = {
+    params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    // read route params
+    const id = (await params).id;
+
+    // fetch data
+    const data = (await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie/${id}`, {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then((res) => res.json())) as MovieResponse;
+
+    // if the movie doesnt exist, return not found
+    if (!data || !data.movie || !data.movie.tmdb || !data.movie.tmdb.id) {
+        return {};
+    }
+
+    return {
+        title: data.movie.tmdb.title + " | Reviews, Ratings, and Stats",
+        description: data.movie.tmdb.overview,
+        openGraph: {
+            title: data.movie.tmdb.title,
+            description: data.movie.tmdb.overview
+        }
+    };
+}
 
 interface MovieResponse {
     movie: {
@@ -23,8 +54,9 @@ interface MovieResponse {
     };
 }
 
-export default async function MoviePage({ params }: { params: Promise<{ id: string }> }) {
+export default async function MoviePage({ params }: Props) {
     const id = (await params).id;
+    console.log(id);
     const data = (await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movie/${id}`, {
         headers: {
             "Content-Type": "application/json"
