@@ -5,6 +5,10 @@ services:
       dockerfile: Dockerfile
     environment:
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      - CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
+      - NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
+      - NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
     depends_on:
       - api
   api:
@@ -16,3 +20,4 @@ services:
       - API_PORT=${API_PORT}
       - TMDB_API_KEY=${TMDB_API_KEY}
       - REDIS_URL=${REDIS_URL}
+      - DB_URL=${DB_URL}
