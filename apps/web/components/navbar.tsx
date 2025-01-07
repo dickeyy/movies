@@ -6,8 +6,8 @@ import { Button } from "./ui/button";
 
 export default function Navbar({ active }: { active?: "home" | "browse" | "sign-up" | "sign-in" }) {
     return (
-        <nav className="bg-card/20 glass-blur fixed top-4 z-50 flex w-fit items-center justify-between rounded-full border p-1 shadow-md">
-            <div className="flex items-center gap-1 sm:gap-2">
+        <nav className="bg-card/20 glass-blur fixed top-4 z-50 flex w-full sm:w-fit items-center justify-between rounded-full border p-1 shadow-md">
+            <div className="flex items-center gap-1 sm:gap-2 w-full justify-between">
                 <NavbarButton isActive={active === "home"}>
                     <Link href="/">Home</Link>
                 </NavbarButton>
@@ -42,7 +42,7 @@ function NavbarButton({
         <Button
             variant={variant as any}
             asChild
-            className={`h-fit rounded-full px-4 py-1 text-[14px] ${
+            className={`h-fit rounded-full px-4 py-1 text-[14px] w-full sm:w-fit ${
                 isActive ? "font-medium" : "font-normal"
             }`}
         >
