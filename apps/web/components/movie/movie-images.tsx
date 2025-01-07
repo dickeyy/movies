@@ -4,7 +4,7 @@ export function MovieBackdrop({ src }: { src: string }) {
     if (!src) return null;
     return (
         <div className="absolute inset-0">
-            <div className="relative w-full h-full">
+            <div className="relative h-full w-full">
                 <Image
                     src={`https://media.themoviedb.org/t/p/original/${src}`}
                     alt="background"
@@ -23,7 +23,7 @@ export function MovieBackdrop({ src }: { src: string }) {
 export function MoviePoster({ src }: { src: string }) {
     if (!src) return null; // TODO: return a placeholder image
     return (
-        <div className="w-64 aspect-[2/3] relative rounded-lg overflow-hidden shadow-lg">
+        <div className="relative aspect-[2/3] w-64 overflow-hidden rounded-lg shadow-lg">
             <Image
                 src={`https://media.themoviedb.org/t/p/w300_and_h450_bestv2/${src}`}
                 alt={`${src} poster`}

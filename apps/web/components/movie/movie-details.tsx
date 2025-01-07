@@ -15,17 +15,17 @@ export function MovieStats({
     lists: number;
 }) {
     return (
-        <div className="flex justify-center gap-8 mt-4 w-full">
+        <div className="mt-4 flex w-full justify-center gap-8">
             <div className="flex items-center gap-1 text-foreground/50">
-                <EyeIcon className="w-4 h-4" />
+                <EyeIcon className="h-4 w-4" />
                 <span className="text-sm">{abbreviateNumber(views)}</span>
             </div>
             <div className="flex items-center gap-1 text-foreground/50">
-                <HeartIcon className="w-4 h-4" />
+                <HeartIcon className="h-4 w-4" />
                 <span className="text-sm">{abbreviateNumber(likes)}</span>
             </div>
             <div className="flex items-center gap-1 text-foreground/50">
-                <ListIcon className="w-4 h-4" />
+                <ListIcon className="h-4 w-4" />
                 <span className="text-sm">{abbreviateNumber(lists)}</span>
             </div>
         </div>
@@ -50,13 +50,13 @@ export function MovieDetailsHeader({ title, releaseDate }: { title: string; rele
                     <MovieTitle title={title} />
                     <Link
                         href={`/year/${releaseDate.split("-")[0]}`}
-                        className="text-foreground/50 hover:underline hover:text-foreground transition-colors"
+                        className="text-foreground/50 transition-colors hover:text-foreground hover:underline"
                     >
                         ({releaseDate.split("-")[0]})
                     </Link>
                 </div>
                 <Button variant="ghost" size="icon" className="text-white/50">
-                    <EllipsisIcon className="w-5 h-5" />
+                    <EllipsisIcon className="h-5 w-5" />
                 </Button>
             </div>
         </div>
@@ -64,7 +64,7 @@ export function MovieDetailsHeader({ title, releaseDate }: { title: string; rele
 }
 
 export function MovieTagline({ tagline }: { tagline: string }) {
-    return <p className="text-white/80 text-sm italic">{tagline}</p>;
+    return <p className="text-sm italic text-white/80">{tagline}</p>;
 }
 
 export function MovieRating({ rating, votes }: { rating: number; votes: number }) {
@@ -78,16 +78,16 @@ export function MovieRating({ rating, votes }: { rating: number; votes: number }
                 {Array.from({ length: fullStars }, (_, i) => (
                     <StarIcon
                         key={`full-${i}`}
-                        className="w-5 h-5 fill-yellow-500 text-yellow-500"
+                        className="h-5 w-5 fill-yellow-500 text-yellow-500"
                     />
                 ))}
 
                 {/* Half star */}
                 {hasHalfStar && (
-                    <StarHalfIcon className="w-5 h-5 fill-yellow-500 text-yellow-500" />
+                    <StarHalfIcon className="h-5 w-5 fill-yellow-500 text-yellow-500" />
                 )}
             </div>
-            <span className="text-white/70 text-sm">
+            <span className="text-sm text-white/70">
                 {rating.toFixed(1)}/5 ({votes.toFixed(0)})
             </span>
         </div>
@@ -105,7 +105,7 @@ export function MovieCertificationDateAndGenres({
 }) {
     return (
         <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
-            <div className="border px-1 rounded border-white/40 text-white/70 text-sm">
+            <div className="rounded border border-white/40 px-1 text-sm text-white/70">
                 {cert || "NR"}
             </div>
             <span>·</span>
@@ -123,7 +123,7 @@ export function MovieCertificationDateAndGenres({
                     <span key={genre.id}>
                         <Link
                             href={`/genre/${genre.id}`}
-                            className="text-white/70 hover:underline hover:text-white transition-colors"
+                            className="text-white/70 transition-colors hover:text-white hover:underline"
                         >
                             {genre.name}
                         </Link>
@@ -137,21 +137,21 @@ export function MovieCertificationDateAndGenres({
 
 export function MovieActionButtons() {
     return (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-4">
+        <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
             <Button variant="secondary" className="w-full text-white">
-                <EyeIcon className="w-5 h-5 mr-2" />
+                <EyeIcon className="mr-2 h-5 w-5" />
                 Watch
             </Button>
             <Button variant="secondary" className="w-full text-white">
-                <HeartIcon className="w-5 h-5 mr-2" />
+                <HeartIcon className="mr-2 h-5 w-5" />
                 Like
             </Button>
             <Button variant="secondary" className="w-full text-white">
-                <StarIcon className="w-5 h-5 mr-2" />
+                <StarIcon className="mr-2 h-5 w-5" />
                 Rate
             </Button>
             <Button variant="secondary" className="w-full text-white">
-                <ListIcon className="w-5 h-5 mr-2" />
+                <ListIcon className="mr-2 h-5 w-5" />
                 Watchlist
             </Button>
         </div>

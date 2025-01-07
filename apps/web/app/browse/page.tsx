@@ -4,12 +4,12 @@ import Link from "next/link";
 
 export default function Home() {
     return (
-        <div className="flex flex-col min-h-screen items-center">
+        <div className="flex min-h-screen flex-col items-center">
             <Navbar active="browse" />
-            <main className="flex-1 flex flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-                <div className="flex flex-col gap-8 items-center sm:items-start">
-                    <div className="flex flex-col space-y-2 items-start justify-center">
-                        <p className="text-foreground/70 text-sm">movies.kyle.so</p>
+            <main className="flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+                <div className="flex flex-col items-center gap-8 sm:items-start">
+                    <div className="flex flex-col items-start justify-center space-y-2">
+                        <p className="text-sm text-foreground/70">movies.kyle.so</p>
                         <h1 className="text-2xl font-medium">
                             A free and open-source{" "}
                             <span>
@@ -17,7 +17,7 @@ export default function Home() {
                                     href="https://letterboxd.com"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="underline text-primary underline-offset-4 decoration-foreground/20 hover:decoration-foreground transition-colors"
+                                    className="text-primary underline decoration-foreground/20 underline-offset-4 transition-colors hover:decoration-foreground"
                                 >
                                     Letterboxd
                                 </Link>

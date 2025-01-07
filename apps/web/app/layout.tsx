@@ -33,7 +33,7 @@ export default function RootLayout({
                 ></script>
             </head>
             <body
-                className={`bg-background min-h-screen overflow-auto font-sans antialiased ${geistSans.variable} ${geistMono.variable}`}
+                className={`min-h-screen overflow-auto bg-background font-sans antialiased ${geistSans.variable} ${geistMono.variable}`}
             >
                 <ThemeProvider
                     attribute="class"

@@ -32,23 +32,23 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
     const movie = data.movie;
 
     return (
-        <div className="relative min-h-screen w-full flex items-center justify-center flex-col">
+        <div className="relative flex min-h-screen w-full flex-col items-center justify-center">
             <Navbar />
             {/* Banner background with gradient overlay */}
             <MovieBackdrop src={movie.backdrop_path} />
 
             {/* Content */}
-            <main className="relative flex-1 w-full px-4 py-8 flex items-center justify-center sm:mt-0 mt-12">
-                <div className="max-w-6xl w-full">
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+            <main className="relative mt-12 flex w-full flex-1 items-center justify-center px-4 py-8 sm:mt-0">
+                <div className="w-full max-w-6xl">
+                    <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
                         {/* Left Column - Poster and Stats */}
-                        <div className="md:col-span-4 flex flex-col items-center">
+                        <div className="flex flex-col items-center md:col-span-4">
                             <MoviePoster src={movie.poster_path} />
                             <MovieStats views={821_000} likes={205_000} lists={131_000} />
                         </div>
 
                         {/* Right Column - Movie Details */}
-                        <div className="md:col-span-8 flex flex-col">
+                        <div className="flex flex-col md:col-span-8">
                             <div className="flex flex-col gap-4">
                                 {/* Header Section */}
                                 <MovieDetailsHeader
@@ -76,7 +76,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                                 />
 
                                 {/* Overview */}
-                                <p className="text-white/90 text-sm mt-2">{movie.overview}</p>
+                                <p className="mt-2 text-sm text-white/90">{movie.overview}</p>
 
                                 {/* Action Buttons */}
                                 <MovieActionButtons />
