@@ -10,11 +10,17 @@ import {
 import { MovieBackdrop, MoviePoster } from "@/components/movie/movie-images";
 import Navbar from "@/components/navbar";
 import { TMDBMovie } from "@/types/movie";
+import { Rating } from "@/types/user";
 import { notFound } from "next/navigation";
 
 interface MovieResponse {
-    movie: TMDBMovie;
-    cache: boolean;
+    movie: {
+        tmdb: TMDBMovie;
+        ratings: Rating[];
+        watched_count: number;
+        liked_count: number;
+        watchlist_count: number;
+    };
 }
 
 export default async function MoviePage({ params }: { params: Promise<{ id: string }> }) {
@@ -25,11 +31,11 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
         }
     }).then((res) => res.json())) as MovieResponse;
 
-    if (!data.movie || !data.movie.id) {
+    if (!data || !data.movie || !data.movie.tmdb || !data.movie.tmdb.id) {
         return notFound();
     }
 
-    const movie = data.movie;
+    const movie = data.movie.tmdb;
 
     return (
         <div className="relative flex min-h-screen w-full flex-col items-center justify-center">
@@ -44,7 +50,11 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                         {/* Left Column - Poster and Stats */}
                         <div className="flex flex-col items-center md:col-span-4">
                             <MoviePoster src={movie.poster_path} />
-                            <MovieStats views={821_000} likes={205_000} lists={131_000} />
+                            <MovieStats
+                                views={data.movie.watched_count}
+                                likes={data.movie.liked_count}
+                                lists={data.movie.watchlist_count}
+                            />
                         </div>
 
                         {/* Right Column - Movie Details */}
@@ -62,7 +72,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
                                 {/* Rating */}
                                 <MovieRating
                                     rating={movie.vote_average / 2}
-                                    votes={movie.vote_count / 2}
+                                    votes={data.movie.ratings.length / 2}
                                 />
 
                                 {/* Movie Info */}
