@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	ID        uuid.UUID `json:"id"`
+	ID        string    `json:"id"`
 	Username  string    `json:"username"`
 	Email     string    `json:"email"`
 	CreatedAt time.Time `json:"created_at"`
@@ -16,7 +16,7 @@ type User struct {
 
 type Rating struct {
 	ID        uuid.UUID `json:"id"`
-	UserID    uuid.UUID `json:"user_id"`
+	UserID    string    `json:"user_id"`
 	MovieID   string    `json:"movie_id"`
 	Rating    float64   `json:"rating"`
 	Content   *string   `json:"content"`
@@ -26,21 +26,21 @@ type Rating struct {
 
 type WatchedMovie struct {
 	ID        uuid.UUID `json:"id"`
-	UserID    uuid.UUID `json:"user_id"`
+	UserID    string    `json:"user_id"`
 	MovieID   string    `json:"movie_id"`
 	WatchedAt time.Time `json:"watched_at"`
 }
 
 type LikedMovie struct {
 	ID      uuid.UUID `json:"id"`
-	UserID  uuid.UUID `json:"user_id"`
+	UserID  string    `json:"user_id"`
 	MovieID string    `json:"movie_id"`
 	LikedAt time.Time `json:"liked_at"`
 }
 
 type WatchlistMovie struct {
 	ID          uuid.UUID `json:"id"`
-	UserID      uuid.UUID `json:"user_id"`
+	UserID      string    `json:"user_id"`
 	MovieID     string    `json:"movie_id"`
 	WatchlistAt time.Time `json:"watchlist_at"`
 }

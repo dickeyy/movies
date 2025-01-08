@@ -1,5 +1,5 @@
 import { abbreviateNumber } from "@/lib/utils";
-import { Genre } from "@/types/movie";
+import { Genre, MovieUserData } from "@/types/movie";
 import { EllipsisIcon, EyeIcon, HeartIcon, ListIcon, StarHalfIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
@@ -87,8 +87,8 @@ export function MovieRating({ rating, votes }: { rating: number; votes: number }
                     <StarHalfIcon className="h-5 w-5 fill-yellow-500 text-yellow-500" />
                 )}
             </div>
-            <span className="text-sm text-white/70">
-                {rating.toFixed(1)}/5 ({votes.toFixed(0)})
+            <span className="font-mono text-sm text-white/70">
+                {rating.toFixed(1)}/5 ({votes.toFixed(0)}) · Average Rating
             </span>
         </div>
     );
@@ -135,24 +135,32 @@ export function MovieCertificationDateAndGenres({
     );
 }
 
-export function MovieActionButtons() {
+export function MovieActionButtons({ user }: { user: MovieUserData | null }) {
     return (
         <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
-            <Button variant="secondary" className="w-full text-white">
+            <Button
+                variant="secondary"
+                disabled={!user}
+                className={`w-full text-white ${user?.watched ? "bg-blue-500/50 hover:bg-blue-600" : ""} `}
+            >
                 <EyeIcon className="mr-2 h-5 w-5" />
-                Watch
+                {user?.watched ? "Watched" : "Watch"}
             </Button>
-            <Button variant="secondary" className="w-full text-white">
+            <Button
+                variant="secondary"
+                disabled={!user}
+                className={`w-full text-white ${user?.liked ? "bg-red-500/50 hover:bg-red-600" : ""} `}
+            >
                 <HeartIcon className="mr-2 h-5 w-5" />
-                Like
+                {user?.liked ? "Liked" : "Like"}
             </Button>
-            <Button variant="secondary" className="w-full text-white">
-                <StarIcon className="mr-2 h-5 w-5" />
-                Rate
-            </Button>
-            <Button variant="secondary" className="w-full text-white">
+            <Button
+                variant="secondary"
+                disabled={!user}
+                className={`w-full text-white ${user?.in_watchlist ? "bg-green-500/50 hover:bg-green-600" : ""} `}
+            >
                 <ListIcon className="mr-2 h-5 w-5" />
-                Watchlist
+                {user?.in_watchlist ? "In Watchlist" : "Watchlist"}
             </Button>
         </div>
     );

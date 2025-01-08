@@ -9,7 +9,7 @@ import (
 )
 
 func CreateUser(user *structs.User) error {
-	user.ID = uuid.New()
+	user.ID = "user_" + uuid.New().String()
 
 	// execute the insert statement
 	_, err := services.DB.Exec(

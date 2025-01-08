@@ -8,22 +8,11 @@ import {
     MovieTagline
 } from "@/components/movie/movie-details";
 import { MovieBackdrop, MoviePoster } from "@/components/movie/movie-images";
+import MovieRater from "@/components/movie/rater";
 import Navbar from "@/components/navbar";
-import { TMDBMovie } from "@/types/movie";
-import { Rating } from "@/types/user";
+import { MovieResponse } from "@/types/movie";
 import { Metadata } from "next";
 import { headers as h } from "next/headers";
-
-interface MovieResponse {
-    movie: {
-        tmdb: TMDBMovie;
-        ratings: Rating[];
-        watched_count: number;
-        liked_count: number;
-        watchlist_count: number;
-    };
-    error?: string;
-}
 
 type Props = {
     params: Promise<{ id: string }>;
@@ -91,9 +80,9 @@ export default async function MoviePage({ params }: Props) {
                         <div className="flex flex-col items-center md:col-span-4">
                             <MoviePoster src={movie.poster_path} />
                             <MovieStats
-                                views={data.movie.watched_count}
-                                likes={data.movie.liked_count}
-                                lists={data.movie.watchlist_count}
+                                views={data.movie.stats.watched_count}
+                                likes={data.movie.stats.liked_count}
+                                lists={data.movie.stats.watchlist_count}
                             />
                         </div>
 
@@ -107,9 +96,11 @@ export default async function MoviePage({ params }: Props) {
                                 {movie.tagline && <MovieTagline tagline={movie.tagline} />}
 
                                 <MovieRating
-                                    rating={movie.vote_average / 2}
+                                    rating={data.movie.stats.average_rating}
                                     votes={
-                                        (data.movie.ratings && data.movie.ratings.length / 2) || 0
+                                        (data.movie.stats.ratings &&
+                                            data.movie.stats.ratings.length) ||
+                                        0
                                     }
                                 />
 
@@ -124,7 +115,9 @@ export default async function MoviePage({ params }: Props) {
 
                                 <p className="mt-2 text-sm text-white/90">{movie.overview}</p>
 
-                                <MovieActionButtons />
+                                <MovieRater initialRating={data.movie.user?.rating?.rating || 0} />
+
+                                <MovieActionButtons user={data.movie.user ?? null} />
                             </div>
                         </div>
                     </div>

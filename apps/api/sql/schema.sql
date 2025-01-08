@@ -1,6 +1,6 @@
 -- Create User Table
 CREATE TABLE IF NOT EXISTS users (
-    id UUID PRIMARY KEY,
+    id TEXT PRIMARY KEY,
     username TEXT UNIQUE NOT NULL CHECK (length(username) >= 3 AND length(username) <= 64),
     email TEXT UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -14,7 +14,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS users_email_idx ON users (lower(email));
 -- Create Ratings Table
 CREATE TABLE IF NOT EXISTS ratings (
     id UUID PRIMARY KEY,
-    user_id UUID NOT NULL,
+    user_id TEXT NOT NULL,
     movie_id TEXT NOT NULL, 
     rating FLOAT NOT NULL CHECK (rating >= 0 AND rating <= 5),
     content TEXT CHECK (length(content) <= 5000),
@@ -29,7 +29,7 @@ CREATE INDEX IF NOT EXISTS ratings_movie_id_idx ON ratings (movie_id);
 
 -- Create Watched Movies Junction Table
 CREATE TABLE IF NOT EXISTS watched_movies (
-    user_id UUID NOT NULL,
+    user_id TEXT NOT NULL,
     movie_id TEXT NOT NULL, 
     watched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, movie_id),
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS watched_movies (
 
 -- Create Liked Movies Junction Table
 CREATE TABLE IF NOT EXISTS liked_movies (
-    user_id UUID NOT NULL,
+    user_id TEXT NOT NULL,
     movie_id TEXT NOT NULL, 
     liked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, movie_id),
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS liked_movies (
 
 -- Create Watchlist Movies Junction Table
 CREATE TABLE IF NOT EXISTS watchlist_movies (
-    user_id UUID NOT NULL,
+    user_id TEXT NOT NULL,
     movie_id TEXT NOT NULL, 
     watchlist_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, movie_id),

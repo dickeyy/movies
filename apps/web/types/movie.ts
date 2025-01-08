@@ -1,3 +1,5 @@
+import { Rating } from "./user";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface TMDBMovie {
     adult: boolean;
@@ -75,4 +77,33 @@ export interface Language {
     english_name: string;
     iso_639_1: string;
     name: string;
+}
+
+interface MovieStats {
+    ratings: Rating[];
+    watched_count: number;
+    liked_count: number;
+    watchlist_count: number;
+    average_rating: number;
+}
+
+export interface MovieUserData {
+    watched: boolean;
+    liked: boolean;
+    in_watchlist: boolean;
+    watched_at?: string; // ISO date string
+    liked_at?: string; // ISO date string
+    watchlist_at?: string; // ISO date string
+    rating?: Rating;
+}
+
+interface Movie {
+    tmdb: TMDBMovie;
+    stats: MovieStats;
+    user?: MovieUserData;
+}
+
+export interface MovieResponse {
+    movie: Movie;
+    error?: string;
 }
