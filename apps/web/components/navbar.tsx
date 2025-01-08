@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
+import AccountDropdown from "./account-dropdown";
 import { Button } from "./ui/button";
 
 export default function Navbar({ active }: { active?: "home" | "browse" | "sign-up" | "sign-in" }) {
@@ -14,9 +16,14 @@ export default function Navbar({ active }: { active?: "home" | "browse" | "sign-
                 <NavbarButton isActive={active === "browse"}>
                     <Link href="/browse">Browse</Link>
                 </NavbarButton>
-                <NavbarButton isActive={active === "sign-in"}>
-                    <Link href="/sign-in">Sign In</Link>
-                </NavbarButton>
+                <SignedOut>
+                    <NavbarButton isActive={active === "sign-in"}>
+                        <Link href="/sign-in">Sign In</Link>
+                    </NavbarButton>
+                </SignedOut>
+                <SignedIn>
+                    <AccountDropdown />
+                </SignedIn>
             </div>
         </nav>
     );
