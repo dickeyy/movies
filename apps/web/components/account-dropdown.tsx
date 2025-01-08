@@ -11,7 +11,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { UserProfile, useAuth, useUser } from "@clerk/nextjs";
-import { Code2Icon, HelpCircleIcon, LogOutIcon, SettingsIcon } from "lucide-react";
+import { Code2Icon, HelpCircleIcon, LogOutIcon, SettingsIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -28,7 +28,7 @@ export default function AccountDropdown() {
                 <DropdownMenuTrigger asChild>
                     <Button
                         variant="ghost"
-                        className="h-fit w-full rounded-full px-4 py-1 text-[14px] sm:w-fit"
+                        className="h-fit w-full rounded-full py-1 pl-1 pr-4 text-[14px] sm:w-fit"
                     >
                         <div className="flex flex-row items-center gap-2">
                             <Avatar className="h-6 w-6">
@@ -41,12 +41,18 @@ export default function AccountDropdown() {
                                     alt={user?.username + "'s avatar"}
                                 />
                             </Avatar>
-                            {/* {user?.username} */}
+                            {user?.username}
                         </div>
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
                     <DropdownMenuGroup>
+                        <DropdownMenuItem asChild>
+                            <Link href={`/${user?.username}`}>
+                                <UserIcon className="mr-2 h-[1rem] w-[1rem]" />
+                                Profile
+                            </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuItem
                             onSelect={() => {
                                 setAcctSettingsDialogOpen(true);
@@ -58,13 +64,13 @@ export default function AccountDropdown() {
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                        <Link href="https://github.com/dickeyy/diary" target="_blank">
+                        <Link href="https://github.com/dickeyy/movies" target="_blank">
                             <Code2Icon className="mr-2 h-[1rem] w-[1rem]" />
                             GitHub
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                        <Link href="https://github.com/dickeyy/diary/issues" target="_blank">
+                        <Link href="https://github.com/dickeyy/movies/issues" target="_blank">
                             <HelpCircleIcon className="mr-2 h-[1rem] w-[1rem]" />
                             Support
                         </Link>
