@@ -26,3 +26,10 @@ type Movie struct {
 	Stats MovieStats     `json:"stats"`
 	User  *MovieUserData `json:"user,omitempty"`
 }
+
+type MovieMini struct {
+	ID               int    `json:"id"`
+	OriginalLanguage string `json:"original_language"`
+	Title            string `json:"title"`
+	PosterPath       string `json:"poster_path"`
+}

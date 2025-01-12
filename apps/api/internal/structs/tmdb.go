@@ -30,6 +30,23 @@ type TMDBMovie struct {
 	VoteCount           int                 `json:"vote_count"`
 }
 
+type TMDBMiniMovie struct {
+	Adult            bool    `json:"adult"`
+	BackdropPath     string  `json:"backdrop_path"`
+	Genres           []Genre `json:"genres"`
+	ID               int     `json:"id"`
+	OriginalLanguage string  `json:"original_language"`
+	OriginalTitle    string  `json:"original_title"`
+	Overview         string  `json:"overview"`
+	Popularity       float64 `json:"popularity"`
+	PosterPath       string  `json:"poster_path"`
+	ReleaseDate      string  `json:"release_date"`
+	Title            string  `json:"title"`
+	Video            bool    `json:"video"`
+	VoteAverage      float64 `json:"vote_average"`
+	VoteCount        int     `json:"vote_count"`
+}
+
 type Collection struct {
 	ID           int    `json:"id"`
 	Name         string `json:"name"`

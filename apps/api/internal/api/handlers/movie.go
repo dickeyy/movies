@@ -5,6 +5,7 @@ import (
 
 	"github.com/dickeyy/movies/apps/api/internal/lib"
 	"github.com/dickeyy/movies/apps/api/internal/storage"
+	"github.com/dickeyy/movies/apps/api/internal/structs"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
 )
@@ -36,6 +37,36 @@ func GetMovie(c *gin.Context) {
 
 	if userID != "" {
 		res["user_id"] = userID
+	}
+
+	c.JSON(http.StatusOK, res)
+}
+
+func GetPopularMovies(c *gin.Context) {
+	pageStr := c.Query("page")
+
+	tmdbMovies, err := lib.QueryTMDBPopularMovies("en-US", pageStr)
+	if err != nil {
+		log.Err(err).Msg("Failed to get popular movies")
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Create a new slice for MovieMini
+	miniMovies := make([]*structs.MovieMini, len(tmdbMovies))
+
+	// Convert each movie to MovieMini
+	for i, movie := range tmdbMovies {
+		miniMovies[i] = &structs.MovieMini{
+			ID:               movie.ID,
+			OriginalLanguage: movie.OriginalLanguage,
+			Title:            movie.Title,
+			PosterPath:       movie.PosterPath,
+		}
+	}
+
+	res := gin.H{
+		"movies": miniMovies,
 	}
 
 	c.JSON(http.StatusOK, res)

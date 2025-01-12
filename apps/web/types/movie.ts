@@ -31,6 +31,13 @@ export interface TMDBMovie {
     vote_count: number;
 }
 
+export interface MiniMovie {
+    id: number;
+    original_language: string;
+    title: string;
+    poster_path: string;
+}
+
 export interface Collection {
     id: number;
     name: string;

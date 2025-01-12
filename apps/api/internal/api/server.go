@@ -40,6 +40,7 @@ func (s *Server) registerRoutes() {
 	// non-auth routes
 	s.router.GET("/", h.GetBase)
 	s.router.GET("/ping", h.GetPing)
+	s.router.GET("/movie/popular", h.GetPopularMovies)
 
 	// optional auth routes
 	opAuthGroup := s.router.Group("/")
