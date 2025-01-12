@@ -5,7 +5,7 @@ import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
-    const comingSoon = false;
+    const comingSoon = true;
     return (
         <div className="flex min-h-screen flex-col items-center">
             {!comingSoon && <Navbar active="home" />}
